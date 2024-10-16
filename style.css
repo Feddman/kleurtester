@@ -1,0 +1,35 @@
+.card {
+    width: 80%;
+    height: auto;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameBoard {
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
+
+svg rect {
+    transition: fill 0.4s ease;
+}
+
+.message {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.message.open {
+    opacity: 1;
+}
+

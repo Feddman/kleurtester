@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colour Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 flex justify-center items-center h-screen">
+    <div class="card bg-white p-5 rounded-lg shadow-lg">
+        <div id="startScreen" class="inner start-screen open text-center">
+            <h1 class="text-xl font-bold uppercase text-gray-800">De Officiële Front End Developer Kleurtester</h1>
+            <p class="text-gray-600 my-2">Ben jij een echte kleurenkenner?<br/>Klik op de andere kleur om level omhoog te gaan.</p>
+            <input id="name" type="text" class="border-2 border-gray-300 rounded-lg p-2 w-3/4 my-4" placeholder="Speler">
+            <button id="playNow" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Speel!</button>
+        </div>
+
+        <div id="gameScreen" class="inner game hidden text-center">
+            <h1 class="text-xl font-bold uppercase text-gray-800">De Officiële Front End Developer Kleurtester!</h1>
+            <p class="text-gray-600 my-2">Zoek de vierkant met een andere kleur. Klik verkeerd en verlies een leven!</p>
+            <div class="game-stats flex justify-between my-4">
+                <div class="lifes text-red-500">
+                    <span>❤️ </span><span id="lifes">3</span>
+                </div>
+                <div class="user-name"></div>
+                <div class="level text-yellow-500">
+                    <span>⭐ </span><span id="level">0</span>
+                </div>
+            </div>
+            <svg id="gameBoard" width="480px" height="500px" viewBox="0 0 240 237"></svg>
+        </div>
+
+        <div id="gameOverScreen" class="inner game-over hidden text-center">
+            <h1 class="text-xl font-bold uppercase text-gray-800">Game Over</h1>
+            <div id="score" class="text-gray-600 my-4 text-2xl"></div>
+            <p id="result" class="text-gray-600 text-2xl w-2/4 mx-auto"></p>
+            <button id="replay" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">Opnieuw spelen</button>
+        </div>
+    </div>
+    <div id="message" class="message hidden text-white bg-red-500 p-4 rounded-lg mt-4"></div>
+    <script src="script.js"></script>
+</body>
+</html>
