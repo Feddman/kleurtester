@@ -18,6 +18,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
+    function getLuminanceByLevel(level) {
+        // At level 1, the luminance difference will be 0.5 (high difference)
+        // At level 20, the luminance difference will be 0.05 (minimal difference)
+        let minLum = 0.05; // Smallest difference for hard levels
+        let maxLum = 0.5;  // Largest difference for easy levels
+        let step = (maxLum - minLum) / 19; // Create a smooth step between levels
+        return maxLum - (step * (level - 1));
+    }
+    
+
     function ColorLuminance(hex, lum) {
         hex = String(hex).replace(/[^0-9a-f]/gi, '');
         if (hex.length < 6) {
@@ -37,9 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
         this.nOptions = 9;
         this.selectedOption = randomInt(0, this.nOptions);
         this.selectedColor = randomInt(0, colorArray.length);
-        this.difficulty = randomInt(2, 12) / 100;
+
         this.primaryColor = colorArray[this.selectedColor];
-        this.secondaryColor = ColorLuminance(this.primaryColor, this.difficulty);
+        let luminanceDifference = getLuminanceByLevel(level);
+        this.secondaryColor = ColorLuminance(this.primaryColor, luminanceDifference);
     }
 
     function updateStats() {
@@ -57,13 +68,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
         let resultMessage = '';
     
-        if (level >= 0 && level < 5) {
+        if (level >= 0 && level < 10) {
             resultMessage = 'Je staat aan het begin van je reis! Het kleurenpalet heeft nog wat geheimen voor je, maar met oefening en doorzettingsvermogen kun je al snel beter worden. Blijf je ogen trainen, het pad naar een Front-End Developer begint hier! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
-        } else if (level >= 5 && level < 10) {
+        } else if (level >= 10 && level < 20) {
             resultMessage = 'Geweldig bezig! Je hebt al een scherp oog voor kleuren, en je bent goed op weg om een echte Front-End Developer te worden. Houd dat enthousiasme vast, je toekomst in de techwereld ziet er veelbelovend uit! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
-        } else if (level >= 10 && level < 15) {
+        } else if (level >= 20 && level < 25) {
             resultMessage = 'Wauw! Je hebt nu echt een scherp oog voor detail. Dit is precies het soort visuele precisie dat nodig is om te slagen als Front-End Developer. Je bouwt al aan een indrukwekkende skillset! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
-        } else if (level >= 15) {
+        } else if (level >= 25) {
             resultMessage = 'Ongelooflijk! Je kleurinzicht is van topniveau. Dit is wat het betekent om een ware meester te zijn in visuele herkenning, een cruciale vaardigheid voor elke succesvolle Front-End Developer. Je hebt het helemaal in je! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
         }
     
@@ -81,9 +92,13 @@ document.addEventListener('DOMContentLoaded', function() {
             rect.setAttribute('fill', i === board.selectedOption ? board.secondaryColor : board.primaryColor);
             rect.addEventListener('click', function() {
                 if (i === board.selectedOption) {
+                 
                     confetti({
-                        particleCount: 150,
-                        spread: 60,
+                       
+                        particleCount: 50,
+                        gravity: 1.5,
+                        decay: 0.9,
+                        spread: 40,
                         origin: { y: 0.6 }
                       });
                     level++;
