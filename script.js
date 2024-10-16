@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resultMessage = 'Geweldig bezig! Je hebt al een scherp oog voor kleuren, en je bent goed op weg om een echte Front-End Developer te worden. Houd dat enthousiasme vast, je toekomst in de techwereld ziet er veelbelovend uit! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
         } else if (level >= 10 && level < 15) {
             resultMessage = 'Wauw! Je hebt nu echt een scherp oog voor detail. Dit is precies het soort visuele precisie dat nodig is om te slagen als Front-End Developer. Je bouwt al aan een indrukwekkende skillset! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
-        } else if (level >= 20) {
+        } else if (level >= 15) {
             resultMessage = 'Ongelooflijk! Je kleurinzicht is van topniveau. Dit is wat het betekent om een ware meester te zijn in visuele herkenning, een cruciale vaardigheid voor elke succesvolle Front-End Developer. Je hebt het helemaal in je! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
         }
     
