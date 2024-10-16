@@ -81,6 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
             rect.setAttribute('fill', i === board.selectedOption ? board.secondaryColor : board.primaryColor);
             rect.addEventListener('click', function() {
                 if (i === board.selectedOption) {
+                    confetti({
+                        particleCount: 150,
+                        spread: 60,
+                        origin: { y: 0.6 }
+                      });
                     level++;
                 } else {
                     lifes--;
