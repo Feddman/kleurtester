@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let level = 0;
     let lifes = 3;
     let gameBoard = document.getElementById('gameBoard');
-    let colorArray = ['#1abc9c', '#16a085', '#27ae60', '#2ecc71', '#2980b9', '#3498db', '#8e44ad', '#9b59b6', '#2c3e50', '#34495e', '#f1c40f', '#f39c12', '#e67e22', '#e74c3c', '#c0392b'];
+    let colorArray = ['#1abc9c', '#D54720', '#FF61F4', '#A57F37', '#16a085', '#27ae60', '#2ecc71', '#2980b9', '#3498db', '#8e44ad', '#9b59b6', '#2c3e50', '#34495e', '#f1c40f', '#f39c12', '#e67e22', '#e74c3c', '#c0392b'];
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
