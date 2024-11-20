@@ -19,14 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getLuminanceByLevel(level) {
-        // At level 1, the luminance difference will be 0.5 (high difference)
-        // At level 20, the luminance difference will be 0.05 (minimal difference)
-        let minLum = 0.05; // Smallest difference for hard levels
-        let maxLum = 0.5;  // Largest difference for easy levels
-        let step = (maxLum - minLum) / 19; // Create a smooth step between levels
+        let minLum = 0.05;
+        let maxLum = 0.5;
+        let step = (maxLum - minLum) / 19;
         return maxLum - (step * (level - 1));
     }
-    
 
     function ColorLuminance(hex, lum) {
         hex = String(hex).replace(/[^0-9a-f]/gi, '');
@@ -61,24 +58,59 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function saveScore(name, score) {
+        let scores = JSON.parse(localStorage.getItem('scores')) || [];
+        scores.push({ name, score });
+        scores.sort((a, b) => b.score - a.score);
+        localStorage.setItem('scores', JSON.stringify(scores));
+    }
+
+    function showScoreboard() {
+        const scores = JSON.parse(localStorage.getItem('scores')) || [];
+        const scoreList = document.getElementById('scoreList');
+        scoreList.innerHTML = '';
+
+        if (scores.length === 0) {
+            scoreList.textContent = 'Er zijn nog geen scores!';
+        } else {
+            scores.forEach((entry, index) => {
+                const scoreEntry = document.createElement('div');
+                scoreEntry.innerHTML = `<strong>${index + 1}. ${entry.name}</strong>: ⭐ ${entry.score}`;
+                scoreList.appendChild(scoreEntry);
+            });
+        }
+
+        document.getElementById('scoreboard').classList.remove('hidden');
+    }
+
+    function resetScoreboard() {
+        localStorage.removeItem('scores');
+        showScoreboard();
+    }
+
+    
+
     function gameOver() {
         document.getElementById('gameScreen').classList.add('hidden');
         document.getElementById('gameOverScreen').classList.remove('hidden');
         document.getElementById('score').innerHTML = `<span>${userName}</span> <span>⭐ ${level}</span>`;
-    
+
         let resultMessage = '';
-    
+
         if (level >= 0 && level < 10) {
-            resultMessage = 'Je staat aan het begin van je reis! Het kleurenpalet heeft nog wat geheimen voor je, maar met oefening en doorzettingsvermogen kun je al snel beter worden. Blijf je ogen trainen, het pad naar een Front-End Developer begint hier! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
+            resultMessage = 'Je staat aan het begin van je reis! Het kleurenpalet heeft nog wat geheimen voor je, maar met oefening en doorzettingsvermogen kun je al snel beter worden. Blijf je ogen trainen, het pad naar een Front-End Developer begint hier!';
         } else if (level >= 10 && level < 20) {
-            resultMessage = 'Geweldig bezig! Je hebt al een scherp oog voor kleuren, en je bent goed op weg om een echte Front-End Developer te worden. Houd dat enthousiasme vast, je toekomst in de techwereld ziet er veelbelovend uit! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
+            resultMessage = 'Geweldig bezig! Je hebt al een scherp oog voor kleuren, en je bent goed op weg om een echte Front-End Developer te worden. Houd dat enthousiasme vast, je toekomst in de techwereld ziet er veelbelovend uit!';
         } else if (level >= 20 && level < 25) {
-            resultMessage = 'Wauw! Je hebt nu echt een scherp oog voor detail. Dit is precies het soort visuele precisie dat nodig is om te slagen als Front-End Developer. Je bouwt al aan een indrukwekkende skillset! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
+            resultMessage = 'Wauw! Je hebt nu echt een scherp oog voor detail. Dit is precies het soort visuele precisie dat nodig is om te slagen als Front-End Developer. Je bouwt al aan een indrukwekkende skillset!';
         } else if (level >= 25) {
-            resultMessage = 'Ongelooflijk! Je kleurinzicht is van topniveau. Dit is wat het betekent om een ware meester te zijn in visuele herkenning, een cruciale vaardigheid voor elke succesvolle Front-End Developer. Je hebt het helemaal in je! <br> <b> Advies: Inschrijven voor de Front-End Development opleiding! </b>';
+            resultMessage = 'Ongelooflijk! Je kleurinzicht is van topniveau. Dit is wat het betekent om een ware meester te zijn in visuele herkenning, een cruciale vaardigheid voor elke succesvolle Front-End Developer. Je hebt het helemaal in je!';
         }
-    
+
         document.getElementById('result').innerHTML = resultMessage;
+
+        saveScore(userName, level);
+        showScoreboard();
     }
 
     function updateBoard(board) {
@@ -92,15 +124,13 @@ document.addEventListener('DOMContentLoaded', function() {
             rect.setAttribute('fill', i === board.selectedOption ? board.secondaryColor : board.primaryColor);
             rect.addEventListener('click', function() {
                 if (i === board.selectedOption) {
-                 
                     confetti({
-                       
                         particleCount: 50,
                         gravity: 1.5,
                         decay: 0.9,
                         spread: 40,
                         origin: { y: 0.6 }
-                      });
+                    });
                     level++;
                 } else {
                     lifes--;
@@ -119,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    
     function startGame() {
         document.getElementById('startScreen').classList.add('hidden');
         document.getElementById('gameScreen').classList.remove('hidden');
@@ -130,21 +159,20 @@ document.addEventListener('DOMContentLoaded', function() {
         newBoard();
     }
 
-    
     document.getElementById('playNow').addEventListener('click', function() {
         startGame();
     });
-    
+
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             startGame();
         }
     });
-    
+
     document.getElementById('replay').addEventListener('click', function() {
         document.getElementById('gameOverScreen').classList.add('hidden');
         document.getElementById('startScreen').classList.remove('hidden');
     });
 
-  
+    showScoreboard();
 });
